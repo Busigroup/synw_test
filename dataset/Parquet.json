@@ -1,0 +1,21 @@
+{
+	"name": "Parquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "synw-busi-test-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Clienti.parquet",
+				"folderPath": "SAP",
+				"fileSystem": "dim"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
