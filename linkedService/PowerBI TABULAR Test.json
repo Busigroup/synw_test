@@ -1,0 +1,12 @@
+{
+	"name": "PowerBI TABULAR Test",
+	"type": "Microsoft.Synapse/workspaces/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "PowerBIWorkspace",
+		"typeProperties": {
+			"workspaceID": "c3511c49-cb6f-4744-9c5f-526e2a22ed9e",
+			"tenantID": "fd4d9467-c4f8-4047-8eaa-df6a28efac4e"
+		}
+	}
+}
