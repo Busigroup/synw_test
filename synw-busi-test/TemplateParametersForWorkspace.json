@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synw-busi-test"
+		},
+		"synw-busi-test-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synw-busi-test.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"Azure Key Vault BUSI_properties_typeProperties_baseUrl": {
+			"value": "https://kv-busigroup.vault.azure.net/"
+		},
+		"Azure Sql Database DWH_properties_typeProperties_server": {
+			"value": "sql-busi-prod.database.windows.net"
+		},
+		"Azure Sql Database DWH_properties_typeProperties_database": {
+			"value": "sqldb-dwh-test"
+		},
+		"synw-busi-test-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://stsynwbusitest.dfs.core.windows.net"
+		}
+	}
+}
