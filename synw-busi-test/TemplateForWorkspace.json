@@ -34,269 +34,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('workspaceName'), '/Pipeline test')]",
-			"type": "Microsoft.Synapse/workspaces/pipelines",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy test",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "AzureSqlSource",
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "ParquetSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "ParquetWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Mandante",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Mandante",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "CodiceCliente",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "CodiceCliente",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "ChiavePaeseRegione",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "ChiavePaeseRegione",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Nome",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Nome",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Indirizzo",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Indirizzo",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "Localita",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Localita",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "CodiceDiAvviamentoPostale",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "CodiceDiAvviamentoPostale",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "RegioneStatoFederaleStatoFederatoProvinciaContea",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "RegioneStatoFederaleStatoFederatoProvinciaContea",
-											"type": "String",
-											"physicalType": "UTF8"
-										}
-									},
-									{
-										"source": {
-											"name": "DataRiferimento",
-											"type": "DateTime",
-											"physicalType": "date"
-										},
-										"sink": {
-											"name": "DataRiferimento",
-											"type": "DateTime",
-											"physicalType": "INT_96"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Parquet",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/datasets/AzureSqlTable1')]",
-				"[concat(variables('workspaceId'), '/datasets/Parquet')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/AzureSqlTable1')]",
-			"type": "Microsoft.Synapse/workspaces/datasets",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Azure Sql Database DWH",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Mandante",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CodiceCliente",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ChiavePaeseRegione",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Nome",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Indirizzo",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Localita",
-						"type": "nvarchar"
-					},
-					{
-						"name": "CodiceDiAvviamentoPostale",
-						"type": "nvarchar"
-					},
-					{
-						"name": "RegioneStatoFederaleStatoFederatoProvinciaContea",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DataRiferimento",
-						"type": "date"
-					}
-				],
-				"typeProperties": {
-					"schema": "dwh",
-					"table": "DimClienteSAP"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/Azure Sql Database DWH')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/Parquet')]",
-			"type": "Microsoft.Synapse/workspaces/datasets",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "synw-busi-test-WorkspaceDefaultStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Clienti.parquet",
-						"folderPath": "SAP",
-						"fileSystem": "dim"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('workspaceId'), '/linkedServices/synw-busi-test-WorkspaceDefaultStorage')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/Azure Key Vault BUSI')]",
 			"type": "Microsoft.Synapse/workspaces/linkedServices",
 			"apiVersion": "2019-06-01-preview",
@@ -415,6 +152,26 @@
 			"properties": {
 				"type": "ManagedIdentity",
 				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [RCLNT]\n,[RLDNR]\n,[RBUKRS]\n,[GJAHR]\n,[BELNR]\n,[DOCLN]\n,[RYEAR]\n,[DOCNR_LD]\n,[RRCTY]\n,[RMVCT]\n,[VORGN]\n,[VRGNG]\n,[BTTYPE]\n,[CBTTYPE]\n,[CLOSINGSTEP]\n,[AWTYP]\n,[AWSYS]\n,[AWORG]\n,[AWREF]\n,[AWITEM]\n,[AWITGRP]\n,[SUBTA]\n,[XREVERSING]\n,[XREVERSED]\n,[XTRUEREV]\n,[AWTYP_REV]\n,[AWORG_REV]\n,[AWREF_REV]\n,[AWITEM_REV]\n,[SUBTA_REV]\n,[XSETTLING]\n,[XSETTLED]\n,[PREC_AWTYP]\n,[PREC_AWSYS]\n,[PREC_AWORG]\n,[PREC_AWREF]\n,[PREC_AWITEM]\n,[PREC_SUBTA]\n,[PREC_AWMULT]\n,[PREC_BUKRS]\n,[PREC_GJAHR]\n,[PREC_BELNR]\n,[PREC_DOCLN]\n,[XSECONDARY]\n,[CLOSING_RUN_ID]\n,[ORGL_CHANGE]\n,[SRC_AWTYP]\n,[SRC_AWSYS]\n,[SRC_AWORG]\n,[SRC_AWREF]\n,[SRC_AWITEM]\n,[SRC_AWSUBIT]\n,[XCOMMITMENT]\n,[OBS_REASON]\n,[RTCUR]\n,[RWCUR]\n,[RHCUR]\n,[RKCUR]\n,[RFCCUR]\n,[ROCUR]\n,[RVCUR]\n,[RBCUR]\n,[RCCUR]\n,[RDCUR]\n,[RECUR]\n,[RFCUR]\n,[RGCUR]\n,[RCO_OCUR]\n,[RGM_OCUR]\n,[RUNIT]\n,[RVUNIT]\n,[RRUNIT]\n,[RMSL_TYPE]\n,[RIUNIT]\n,[QUNIT1]\n,[QUNIT2]\n,[QUNIT3]\n,[CO_MEINH]\n,[RACCT]\n,[RCNTR]\n,[PRCTR]\n,[RFAREA]\n,[RBUSA]\n,[KOKRS]\n,[SEGMENT]\n,[SCNTR]\n,[PPRCTR]\n,[SFAREA]\n,[SBUSA]\n,[RASSC]\n,[PSEGMENT]\n,[TSL]\n,[WSL]\n,[WSL2]\n,[WSL3]\n,[HSL]\n,[KSL]\n,[FCSL]\n,[OSL]\n,[VSL]\n,[BSL]\n,[CSL]\n,[DSL]\n,[ESL]\n,[FSL]\n,[GSL]\n,[KFSL]\n,[KFSL2]\n,[KFSL3]\n,[PSL]\n,[PSL2]\n,[PSL3]\n,[PFSL]\n,[PFSL2]\n,[PFSL3]\n,[CO_OSL]\n,[GM_OSL]\n,[HSLALT]\n,[KSLALT]\n,[OSLALT]\n,[VSLALT]\n,[BSLALT]\n,[CSLALT]\n,[DSLALT]\n,[ESLALT]\n,[FSLALT]\n,[GSLALT]\n,[HSLEXT]\n,[KSLEXT]\n,[OSLEXT]\n,[VSLEXT]\n,[BSLEXT]\n,[CSLEXT]\n,[DSLEXT]\n,[ESLEXT]\n,[FSLEXT]\n,[GSLEXT]\n,[HVKWRT]\n,[MSL]\n,[MFSL]\n,[VMSL]\n,[VMFSL]\n,[RMSL]\n,[QUANT1]\n,[QUANT2]\n,[QUANT3]\n,[CO_MEGBTR]\n,[CO_MEFBTR]\n,[HSALK3]\n,[KSALK3]\n,[OSALK3]\n,[VSALK3]\n,[HSALKV]\n,[KSALKV]\n,[OSALKV]\n,[VSALKV]\n,[HPVPRS]\n,[KPVPRS]\n,[OPVPRS]\n,[VPVPRS]\n,[HSTPRS]\n,[KSTPRS]\n,[OSTPRS]\n,[VSTPRS]\n,[HVKSAL]\n,[LBKUM]\n,[DRCRK]\n,[POPER]\n,[PERIV]\n,[FISCYEARPER]\n,[BUDAT]\n,[BLDAT]\n,[BLART]\n,[BUZEI]\n,[ZUONR]\n,[BSCHL]\n,[BSTAT]\n,[LINETYPE]\n,[KTOSL]\n,[SLALITTYPE]\n,[XSPLITMOD]\n,[USNAM]\n,[TIMESTAMP]\n,[EPRCTR]\n,[RHOART]\n,[GLACCOUNT_TYPE]\n,[KTOPL]\n,[LOKKT]\n,[KTOP2]\n,[RBUNIT]\n,[RBUPTR]\n,[RCOMP]\n,[RITCLG]\n,[RITEM]\n,[SITYP]\n,[SUBIT]\n,[REBZG]\n,[REBZJ]\n,[REBZZ]\n,[REBZT]\n,[RBEST]\n,[EBELN_LOGSYS]\n,[EBELN]\n,[EBELP]\n,[ZEKKN]\n,[SGTXT]\n,[KDAUF]\n,[KDPOS]\n,[MATNR]\n,[WERKS]\n,[LIFNR]\n,[KUNNR]\n,[FBUDA]\n,[PEROP_BEG]\n,[PEROP_END]\n,[COCO_NUM]\n,[WWERT]\n,[PRCTR_DRVTN_SOURCE_TYPE]\n,[KOART]\n,[UMSKZ]\n,[TAX_COUNTRY]\n,[MWSKZ]\n,[HBKID]\n,[HKTID]\n,[VALUT]\n,[XOPVW]\n,[AUGDT]\n,[AUGBL]\n,[AUGGJ]\n,[AFABE]\n,[ANLN1]\n,[ANLN2]\n,[BZDAT]\n,[ANBWA]\n,[MOVCAT]\n,[DEPR_PERIOD]\n,[ANLGR]\n,[ANLGR2]\n,[SETTLEMENT_RULE]\n,[ANLKL]\n,[KTOGR]\n,[PANL1]\n,[PANL2]\n,[ANLN2_PN]\n,[BWASL_PN]\n,[BZDAT_PN]\n,[UBZDT_PN]\n,[XVABG_PN]\n,[ANBTR_PN]\n,[PROZS_PN]\n,[XMANPROPVAL_PN]\n,[KALNR]\n,[VPRSV]\n,[MLAST]\n,[KZBWS]\n,[XOBEW]\n,[SOBKZ]\n,[VTSTAMP]\n,[MAT_KDAUF]\n,[MAT_KDPOS]\n,[MAT_PSPNR]\n,[MAT_PS_POSID]\n,[MAT_LIFNR]\n,[BWTAR]\n,[BWKEY]\n,[HPEINH]\n,[KPEINH]\n,[OPEINH]\n,[VPEINH]\n,[MLPTYP]\n,[MLCATEG]\n,[QSBVALT]\n,[QSPROCESS]\n,[PERART]\n,[MLPOSNR]\n,[INV_MOV_CATEG]\n,[BUKRS_SENDER]\n,[RACCT_SENDER]\n,[ACCAS_SENDER]\n,[ACCASTY_SENDER]\n,[OBJNR]\n,[HRKFT]\n,[HKGRP]\n,[PAROB1]\n,[PAROBSRC]\n,[USPOB]\n,[CO_BELKZ]\n,[CO_BEKNZ]\n,[BELTP]\n,[MUVFLG]\n,[GKONT]\n,[GKOAR]\n,[ERLKZ]\n,[PERNR]\n,[PAOBJNR]\n,[XPAOBJNR_CO_REL]\n,[SCOPE]\n,[LOGSYSO]\n,[PBUKRS]\n,[PSCOPE]\n,[LOGSYSP]\n,[BWSTRAT]\n,[OBJNR_HK]\n,[AUFNR_ORG]\n,[UKOSTL]\n,[ULSTAR]\n,[UPRZNR]\n,[UPRCTR]\n,[UMATNR]\n,[VARC_UACCT]\n,[ACCAS]\n,[ACCASTY]\n,[LSTAR]\n,[AUFNR]\n,[AUTYP]\n,[PS_PSP_PNR]\n,[PS_POSID]\n,[PS_PRJ_PNR]\n,[PS_PSPID]\n,[NPLNR]\n,[NPLNR_VORGN]\n,[PRZNR]\n,[KSTRG]\n,[BEMOT]\n,[RSRCE]\n,[QMNUM]\n,[SERVICE_DOC_TYPE]\n,[SERVICE_DOC_ID]\n,[SERVICE_DOC_ITEM_ID]\n,[SERVICE_CONTRACT_TYPE]\n,[SERVICE_CONTRACT_ID]\n,[SERVICE_CONTRACT_ITEM_ID]\n,[SOLUTION_ORDER_ID]\n,[SOLUTION_ORDER_ITEM_ID]\n,[VTKEY]\n,[VTPOS]\n,[RA_CONTRACT_ID]\n,[RA_POB_ID]\n,[ERKRS]\n,[PACCAS]\n,[PACCASTY]\n,[PLSTAR]\n,[PAUFNR]\n,[PAUTYP]\n,[PPS_PSP_PNR]\n,[PPS_POSID]\n,[PPS_PRJ_PNR]\n,[PPS_PSPID]\n,[PKDAUF]\n,[PKDPOS]\n,[PPAOBJNR]\n,[PNPLNR]\n,[PNPLNR_VORGN]\n,[PPRZNR]\n,[PKSTRG]\n,[PSERVICE_DOC_TYPE]\n,[PSERVICE_DOC_ID]\n,[PSERVICE_DOC_ITEM_ID]\n,[CO_ACCASTY_N1]\n,[CO_ACCASTY_N2]\n,[CO_ACCASTY_N3]\n,[CO_ZLENR]\n,[CO_BELNR]\n,[CO_BUZEI]\n,[CO_BUZEI1]\n,[CO_BUZEI2]\n,[CO_BUZEI5]\n,[CO_BUZEI6]\n,[CO_BUZEI7]\n,[CO_REFBZ]\n,[CO_REFBZ1]\n,[CO_REFBZ2]\n,[CO_REFBZ5]\n,[CO_REFBZ6]\n,[CO_REFBZ7]\n,[OVERTIMECAT]\n,[WORK_ITEM_ID]\n,[ARBID]\n,[VORNR]\n,[AUFPS]\n,[UVORN]\n,[EQUNR]\n,[TPLNR]\n,[ISTRU]\n,[ILART]\n,[PLKNZ]\n,[ARTPR]\n,[PRIOK]\n,[MAUFNR]\n,[MATKL_MM]\n,[PAUFPS]\n,[PLANNED_PARTS_WORK]\n,[FKART]\n,[VKORG]\n,[VTWEG]\n,[SPART]\n,[MATNR_COPA]\n,[MATKL]\n,[KDGRP]\n,[LAND1]\n,[BRSCH]\n,[BZIRK]\n,[KUNRE]\n,[KUNWE]\n,[KONZS]\n,[ACDOC_COPA_EEW_DUMMY_PA]\n,[PRODH_PA]\n,[KMVKBU_PA]\n,[KMVKGR_PA]\n,[PARTNER_PA]\n,[WW001_PA]\n,[WW002_PA]\n,[KMHI01_PA]\n,[KMHI02_PA]\n,[KMHI03_PA]\n,[PAPH1_PA]\n,[PAPH2_PA]\n,[PAPH3_PA]\n,[WW03_PA]\n,[WW04_PA]\n,[KMKDGR_PA]\n,[KMMAKL_PA]\n,[KMVTNR_PA]\n,[VKBUR_PA]\n,[VKGRP_PA]\n,[AUART_PA]\n,[AUGRU_PA]\n,[MVGR1_PA]\n,[MVGR2_PA]\n,[KONDM_PA]\n,[KTGRM_PA]\n,[WW06_PA]\n,[MTART_PA]\n,[WW07_PA]\n,[PAPH4_PA]\n,[PAPH5_PA]\n,[DUMMY_MRKT_SGMNT_EEW_PS]\n,[RE_BUKRS]\n,[RE_ACCOUNT]\n,[FIKRS]\n,[FIPEX]\n,[FISTL]\n,[MEASURE]\n,[RFUND]\n,[RGRANT_NBR]\n,[RBUDGET_PD]\n,[SFUND]\n,[SGRANT_NBR]\n,[SBUDGET_PD]\n,[BDGT_ACCOUNT]\n,[BDGT_ACCOUNT_COCODE]\n,[BDGT_CNSMPN_DATE]\n,[BDGT_CNSMPN_PERIOD]\n,[BDGT_CNSMPN_YEAR]\n,[BDGT_RELEVANT]\n,[BDGT_CNSMPN_TYPE]\n,[BDGT_CNSMPN_AMOUNT_TYPE]\n,[RSPONSORED_PROG]\n,[RSPONSORED_CLASS]\n,[RBDGT_VLDTY_NBR]\n,[KBLNR]\n,[KBLPOS]\n,[VNAME]\n,[EGRUP]\n,[RECID]\n,[VPTNR]\n,[BTYPE]\n,[ETYPE]\n,[PRODPER]\n,[BILLM]\n,[POM]\n,[CBRUNID]\n,[JVACTIVITY]\n,[PVNAME]\n,[PEGRUP]\n,[S_RECIND]\n,[CBRACCT]\n,[CBOBJNR]\n,[SWENR]\n,[SGENR]\n,[SGRNR]\n,[SMENR]\n,[RECNNR]\n,[SNKSL]\n,[SEMPSL]\n,[DABRZ]\n,[PSWENR]\n,[PSGENR]\n,[PSGRNR]\n,[PSMENR]\n,[PRECNNR]\n,[PSNKSL]\n,[PSEMPSL]\n,[PDABRZ]\n,[ACROBJTYPE]\n,[ACRLOGSYS]\n,[ACROBJ_ID]\n,[ACRSOBJ_ID]\n,[ACRITMTYPE]\n,[ACRREFOBJ_ID]\n,[ACRVALDAT]\n,[VALOBJTYPE]\n,[VALOBJ_ID]\n,[VALSOBJ_ID]\n,[NETDT]\n,[RISK_CLASS]\n,[ACDOC_EEW_DUMMY]\n,[DUMMY_INCL_EEW_COBL]\n,[FUP_ACTION]\n,[SDM_VERSION]\n,[MIG_SOURCE]\n,[MIG_DOCLN]\n,[_DATAAGING]\n FROM [stg].[HAN_ACDOCA]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "synwdb-dwh-test",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
 			},
 			"dependsOn": []
 		},
